@@ -74,7 +74,7 @@ RSpec.describe Deputy, type: :model do
     it 'civil_name is capitalized before saved to database' do
       deputy = FactoryBot.build(:deputy, civil_name: 'LEONARDO BARRETO DE MORAES')
 
-      expect(civil_name).to eq('Leonardo Barreto De Moraes')
+      expect(deputy.civil_name).to eq('Leonardo Barreto De Moraes')
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe Deputy, type: :model do
     it 'photo_url is generated before save to dabatase if api do not respond' do
       deputy = FactoryBot.build(:deputy_without_api_data, photo_url: nil)
 
-      expect(photo_url).to eq('https://www.camara.leg.br/internet/deputado/bandep/204359.jpg')
+      expect(deputy.photo_url).to eq('https://www.camara.leg.br/internet/deputado/bandep/204359.jpg')
     end
   end
 
