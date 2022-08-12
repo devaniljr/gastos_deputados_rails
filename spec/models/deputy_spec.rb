@@ -51,14 +51,7 @@ RSpec.describe Deputy, type: :model do
     end
 
     it 'is valid without an optional civil name' do
-      expect(FactoryBot.build(:deputy_without_api_data, name: nil)).to be_valid
-    end
-
-    it 'is invalid without photo_url' do
-      deputy = FactoryBot.build(:deputy, photo_url: nil)
-      deputy.valid?
-
-      expect(deputy.errors[:photo_url]).to include("can't be blank")
+      expect(FactoryBot.build(:deputy_without_api_data, civil_name: nil)).to be_valid
     end
 
     it 'is valid without an optional email' do
@@ -70,20 +63,25 @@ RSpec.describe Deputy, type: :model do
     end
   end
 
-  context '#capitalize_name' do
+  context 'before_save civil_name' do
     it 'civil_name is capitalized before saved to database' do
-      deputy = FactoryBot.build(:deputy, civil_name: 'LEONARDO BARRETO DE MORAES')
+      deputy = FactoryBot.create(:deputy, civil_name: 'LEONARDO BARRETO DE MORAES')
 
       expect(deputy.civil_name).to eq('Leonardo Barreto De Moraes')
     end
+
+    it 'civil_name is not capitalized if is not given' do
+      deputy = FactoryBot.create(:deputy_without_api_data)
+
+      expect(deputy.civil_name).to be_nil
+    end
   end
 
-  context '#generate_photo_url' do
+  context 'before_validation photo_url' do
     it 'photo_url is generated before save to dabatase if api do not respond' do
-      deputy = FactoryBot.build(:deputy_without_api_data, photo_url: nil)
+      deputy = FactoryBot.create(:deputy_without_api_data, photo_url: nil)
 
       expect(deputy.photo_url).to eq('https://www.camara.leg.br/internet/deputado/bandep/204359.jpg')
     end
   end
-
 end
