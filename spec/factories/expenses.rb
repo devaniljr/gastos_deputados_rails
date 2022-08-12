@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :expense do
-    association :deputy
+    deputy { FactoryBot.create(:deputy) }
     type_of_expense { 10 }
     description { 'HOSPEDAGEM' }
     date { DateTime.now }
