@@ -8,8 +8,6 @@ RSpec.describe CsvManager::ExtractDataService do
       expect(CsvManager::ExtractDataService.call(file_fixture("csv_small_invalid.csv")).size).to eq(0)
     end
     it 'only data from the required_headers' do
-      data =
-
       expect(CsvManager::ExtractDataService.call(file_fixture("csv_small_valid.csv")).first.size).to eq(12)
     end
   end
