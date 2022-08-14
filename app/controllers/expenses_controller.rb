@@ -5,7 +5,7 @@ class ExpensesController < ApplicationController
 
   def show
     @deputy = Deputy.find(params[:id])
-    @expenses = @deputy.expenses
+    @expenses = @deputy.expenses.page(params[:page]).per(25)
   end
 
   def create
