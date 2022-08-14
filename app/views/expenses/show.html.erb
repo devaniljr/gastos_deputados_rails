@@ -13,10 +13,10 @@
   <tbody>
     <% @expenses.each do |exp| %>
       <tr>
-        <th scope="row"><%= exp.date %></th>
+        <th scope="row"><%= exp.date.strftime('%d de %B de %Y') %></th>
         <td><%= exp.provider_name %></td>
-        <td><%= exp.value %></td>
-        <td>Download</td>
+        <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
+        <td>📥</td>
       </tr>
     <% end %>
   </tbody>

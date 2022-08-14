@@ -1,16 +1,20 @@
 <div class="container">
   <h1>Veja quem são os deputados federais que mais gastaram com a Cota para Exercício da Atividade Parlamentar | Rondônia</h1>
 
-    <% @deputies.each do |dep| %>
-      <%= link_to dep do %>
-        <main class="leaderboard__profiles">
-          <article class="leaderboard__profile">
-            <%= image_tag dep.photo_url, class: "leaderboard__picture" %>
-            <span class="leaderboard__name"><%= dep.name %> (<%= dep.party %>)
-            </span>
-            <span class="leaderboard__value"><%= number_to_currency(dep.sum_of_expenses, unit: "R$ ", separator: ",", delimiter: ".") %></span>
-          </article>
-        </main>
+    <% if @deputies.empty? %>
+      <p>Ainda não há dados para serem mostrados...</p>
+    <% else %>
+      <% @deputies.each do |dep| %>
+        <%= link_to dep do %>
+          <main class="leaderboard__profiles">
+            <article class="leaderboard__profile">
+              <%= image_tag dep.photo_url, class: "leaderboard__picture" %>
+              <span class="leaderboard__name"><%= dep.name %> (<%= dep.party %>)
+              </span>
+              <span class="leaderboard__value"><%= number_to_currency(dep.sum_of_expenses, unit: "R$ ", separator: ",", delimiter: ".") %></span>
+            </article>
+          </main>
+        <% end %>
       <% end %>
     <% end %>
 </div>
