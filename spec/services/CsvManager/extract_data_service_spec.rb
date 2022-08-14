@@ -1,5 +1,5 @@
 require 'rails_helper'
-require './app/services/CsvManager/extract_data_service.rb'
+require './app/services/csv_manager/extract_data_service.rb'
 
 RSpec.describe CsvManager::ExtractDataService do
   context 'It will extract' do

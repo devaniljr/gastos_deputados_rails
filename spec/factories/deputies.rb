@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :deputy do
-    id_deputy { 204359 }
+    number_deputy { 204359 }
     name { "Léo Morais" }
     state { "RO" }
     party { "PODE" }
@@ -12,7 +12,7 @@ FactoryBot.define do
   end
 
   factory :deputy_without_api_data, class: Deputy do
-    id_deputy { 204359 }
+    number_deputy { 204359 }
     name { "Léo Morais" }
     state { "RO" }
     party { "PODE" }

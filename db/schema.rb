@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_12_194119) do
+ActiveRecord::Schema.define(version: 2022_08_14_142024) do
 
   create_table "deputies", force: :cascade do |t|
-    t.integer "id_deputy"
+    t.integer "number_deputy"
     t.string "name"
     t.string "state"
     t.string "party"

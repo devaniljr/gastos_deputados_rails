@@ -1,5 +1,5 @@
 require 'rails_helper'
-require './app/services/CsvManager/check_integrity_service.rb'
+require './app/services/csv_manager/check_integrity_service.rb'
 
 RSpec.describe CsvManager::CheckIntegrityService do
   context 'It will check if' do

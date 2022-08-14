@@ -2,24 +2,24 @@ require 'rails_helper'
 
 RSpec.describe Deputy, type: :model do
   context 'Validations' do
-    it 'is valid with id_deputy, name, state, party and legislature' do
+    it 'is valid with number_deputy, name, state, party and legislature' do
       expect(FactoryBot.build(:deputy)).to be_valid
     end
 
-    it 'is invalid without id_deputy' do
-      deputy = FactoryBot.build(:deputy, id_deputy: nil)
+    it 'is invalid without number_deputy' do
+      deputy = FactoryBot.build(:deputy, number_deputy: nil)
       deputy.valid?
 
-      expect(deputy.errors[:id_deputy]).to include("can't be blank")
+      expect(deputy.errors[:number_deputy]).to include("can't be blank")
     end
 
-    it 'is invalid with a duplicated id_deputy' do
-      FactoryBot.create(:deputy, id_deputy: 204359)
+    it 'is invalid with a duplicated number_deputy' do
+      FactoryBot.create(:deputy, number_deputy: 204359)
 
-      deputy = FactoryBot.build(:deputy, id_deputy: 204359)
+      deputy = FactoryBot.build(:deputy, number_deputy: 204359)
       deputy.valid?
 
-      expect(deputy.errors[:id_deputy]).to include("has already been taken")
+      expect(deputy.errors[:number_deputy]).to include("has already been taken")
     end
 
     it 'is invalid without a name' do

@@ -1,0 +1,10 @@
+<%= form_for action="/importar" do |f| %>
+  <div>
+    <%= f.label 'Upload do arquivo' %>
+    <%= f.file_field :csv, accept: ".csv" %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
