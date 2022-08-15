@@ -10,7 +10,7 @@ RSpec.describe Deputy, type: :model do
       deputy = FactoryBot.build(:deputy, number_deputy: nil)
       deputy.valid?
 
-      expect(deputy.errors[:number_deputy]).to include("can't be blank")
+      expect(deputy.errors[:number_deputy]).to include("não pode ficar em branco")
     end
 
     it 'is invalid with a duplicated number_deputy' do
@@ -19,35 +19,35 @@ RSpec.describe Deputy, type: :model do
       deputy = FactoryBot.build(:deputy, number_deputy: 204359)
       deputy.valid?
 
-      expect(deputy.errors[:number_deputy]).to include("has already been taken")
+      expect(deputy.errors[:number_deputy]).to include("já está em uso")
     end
 
     it 'is invalid without a name' do
       deputy = FactoryBot.build(:deputy, name: nil)
       deputy.valid?
 
-      expect(deputy.errors[:name]).to include("can't be blank")
+      expect(deputy.errors[:name]).to include("não pode ficar em branco")
     end
 
     it 'is invalid without a state' do
       deputy = FactoryBot.build(:deputy, state: nil)
       deputy.valid?
 
-      expect(deputy.errors[:state]).to include("can't be blank")
+      expect(deputy.errors[:state]).to include("não pode ficar em branco")
     end
 
     it 'is invalid without a party' do
       deputy = FactoryBot.build(:deputy, party: nil)
       deputy.valid?
 
-      expect(deputy.errors[:party]).to include("can't be blank")
+      expect(deputy.errors[:party]).to include("não pode ficar em branco")
     end
 
     it 'is invalid without a legislature' do
       deputy = FactoryBot.build(:deputy, legislature: nil)
       deputy.valid?
 
-      expect(deputy.errors[:legislature]).to include("can't be blank")
+      expect(deputy.errors[:legislature]).to include("não pode ficar em branco")
     end
 
     it 'is valid without an optional civil name' do
