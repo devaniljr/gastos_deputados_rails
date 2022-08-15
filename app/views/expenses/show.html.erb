@@ -1,5 +1,7 @@
-<div class="container">
+<div class="container pt-4">
   <h1>Despesas de <%= @deputy.name %></h1>
+  <p>A maior despesa é:</p>
+  <%= @deputy.biggest_expense %>
 
   <table class="table">
   <thead>
@@ -11,13 +13,22 @@
     </tr>
   </thead>
   <tbody>
-    <% @expenses.each do |exp| %>
-      <tr>
-        <th scope="row"><%= exp.date.strftime('%d de %B de %Y') %></th>
-        <td><%= exp.provider_name %></td>
-        <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
-        <td>📥</td>
-      </tr>
+    <% @expenses.each_with_index do |exp, i| %>
+      <% if i == 0 %>
+        <tr class="table-danger">
+          <th scope="row"><%= l exp.date, format: :date_ %></th>
+          <td><%= exp.provider_name %></td>
+          <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
+          <td class="text-center">📥</td>
+        </tr>
+      <% else %>
+        <tr>
+          <th scope="row"><%= l exp.date, format: :date_ %></th>
+          <td><%= exp.provider_name %></td>
+          <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
+          <td class="text-center">📥</td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
