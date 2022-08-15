@@ -1,10 +1,14 @@
-<%= form_for action="/importar" do |f| %>
-  <div>
-    <%= f.label 'Upload do arquivo' %>
-    <%= f.file_field :csv, accept: ".csv" %>
-  </div>
+<% if @deputies.empty? %>
+  <%= form_for action="/importar" do |f| %>
+    <div>
+      <%= f.label 'Upload do arquivo' %>
+      <%= f.file_field :csv, accept: ".csv" %>
+    </div>
 
-  <div>
-    <%= f.submit %>
-  </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% else %>
+  <%= button_to "Excluir dados", importar_path, method: :delete %>
 <% end %>

@@ -2,9 +2,6 @@ class PopulateDatabaseJob < ApplicationJob
   queue_as :default
 
   def perform(file)
-    Expense.destroy_all
-    Deputy.destroy_all
-
     data = CsvManager::ExtractDataService.call(file)
 
     data.each do |expense|

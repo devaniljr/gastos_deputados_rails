@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pt-4">
   <h1>Veja quem são os deputados federais que mais gastaram com a Cota para Exercício da Atividade Parlamentar | Rondônia</h1>
 
     <% if @deputies.empty? %>
@@ -9,12 +9,88 @@
           <main class="leaderboard__profiles">
             <article class="leaderboard__profile">
               <%= image_tag dep.photo_url, class: "leaderboard__picture" %>
-              <span class="leaderboard__name"><%= dep.name %> (<%= dep.party %>)
+              <span class="leaderboard__name">
+                <%= dep.name %> (<%= dep.party %>)
               </span>
-              <span class="leaderboard__value"><%= number_to_currency(dep.sum_of_expenses, unit: "R$ ", separator: ",", delimiter: ".") %></span>
+              <span class="leaderboard__value">
+                <%= number_to_currency(dep.sum_of_expenses, unit: "R$ ", separator: ",", delimiter: ".") %>
+              </span>
             </article>
           </main>
         <% end %>
       <% end %>
     <% end %>
+
+  <h1>Gráficos</h1>
+  <h3>Qual deputado mais gastou?</h3>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Deputado', 'Gasto total'],
+          <% @deputies.each do |dep| %>
+          ['<%= dep.name %>',     <%= dep.sum_of_expenses %>],
+          <% end %>
+        ]);
+
+        var options = {
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    <hr>
+    <h3 class="pb-4">Gastos com CEAP por mês no estado:</h3>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Meses', 'Despesas (em mil)'],
+          ["Janeiro/21", <%= @expenses.all_monthly_expenses('01', '2021') %>],
+          ["Fevereiro", <%= @expenses.all_monthly_expenses('02', '2021') %>],
+          ["Março", <%= @expenses.all_monthly_expenses('03', '2021') %>],
+          ["Abril", <%= @expenses.all_monthly_expenses('04', '2021') %>],
+          ["Maio", <%= @expenses.all_monthly_expenses('05', '2021') %>],
+          ["Junho", <%= @expenses.all_monthly_expenses('06', '2021') %>],
+          ["Julho", <%= @expenses.all_monthly_expenses('07', '2021') %>],
+          ["Agosto", <%= @expenses.all_monthly_expenses('08', '2021') %>],
+          ["Setembro", <%= @expenses.all_monthly_expenses('09', '2021') %>],
+          ["Outubro", <%= @expenses.all_monthly_expenses('10', '2021') %>],
+          ["Novembro", <%= @expenses.all_monthly_expenses('11', '2021') %>],
+          ["Dezembro", <%= @expenses.all_monthly_expenses('12', '2021') %>],
+          ["Janeiro/22", <%= @expenses.all_monthly_expenses('01', '2022') %>]
+        ]);
+
+        var options = {
+          width: 1000,
+          legend: { position: 'none' },
+          chart: {},
+          axes: {
+            x: {
+              0: { side: 'bottom'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      };
+    </script>
+
+    <div id="top_x_div" style="width: 800px; height: 600px;"></div>
 </div>

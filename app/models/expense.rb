@@ -8,4 +8,8 @@ class Expense < ApplicationRecord
   validates :provider_name, presence: true
   validates :value, presence: true
   validates :document_url, presence: true
+
+  def self.all_monthly_expenses(month, year)
+    self.where("strftime('%m', date) = ? AND strftime('%Y', date) = ?", month, year).sum(:value)
+  end
 end

@@ -14,4 +14,12 @@ class Deputy < ApplicationRecord
   def sum_of_expenses
     self.expenses.sum(:value)
   end
+
+  def biggest_expense
+    self.expenses.order("value DESC").first
+  end
+
+  def monthly_expenses(month, year)
+    self.expenses.where("strftime('%m', date) = ? AND strftime('%Y', date) = ?", month, year).sum(:value)
+  end
 end

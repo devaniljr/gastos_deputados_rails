@@ -1,6 +1,7 @@
 class ExpensesController < ApplicationController
   def index
     @deputies = Deputy.all.sort_by(&:sum_of_expenses).reverse
+    @expenses = Expense.all
   end
 
   def show
@@ -9,7 +10,7 @@ class ExpensesController < ApplicationController
   end
 
   def create
-
+    @deputies = Deputy.all
   end
 
   def import
@@ -18,9 +19,18 @@ class ExpensesController < ApplicationController
 
     if CsvManager::CheckIntegrityService.call(file)
       PopulateDatabaseJob.perform_later(file)
+      redirect_to root_path
+      flash[:notice] = "Os dados estão sendo processados..."
     else
       redirect_to root_path
       flash[:alert] = "Erro ao processar o arquivo"
     end
+  end
+
+  def destroy
+    Expense.destroy_all
+    Deputy.destroy_all
+    redirect_to importar_path
+    flash[:notice] = "Os dados foram excluídos, agora você pode enviar um novo arquivo."
   end
 end
