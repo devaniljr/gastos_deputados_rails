@@ -1,4 +1,5 @@
 <% if @deputies.empty? %>
+  <h1>Enviar novos dados</h1>
   <%= form_for action="/importar" do |f| %>
     <div>
       <%= f.label 'Upload do arquivo' %>
@@ -10,5 +11,6 @@
     </div>
   <% end %>
 <% else %>
+  <h1>Apagar dados atuais</h1>
   <%= button_to "Excluir dados", importar_path, method: :delete %>
 <% end %>

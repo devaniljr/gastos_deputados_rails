@@ -10,8 +10,8 @@ pt-BR:
   views:
     pagination:
       first: 'Primeiro'
-      previous: '<<'
-      next: '>>'
+      previous: '<'
+      next: '>'
       last: 'Último'
   date:
     abbr_day_names:
