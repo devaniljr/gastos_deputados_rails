@@ -5,7 +5,6 @@ class PopulateDatabaseJob < ApplicationJob
     data = CsvManager::ExtractDataService.call(file)
 
     data.each do |expense|
-      puts "Populating database..."
       deputy_exist = Deputy.exists?(number_deputy: expense["ideCadastro"])
 
       if deputy_exist
