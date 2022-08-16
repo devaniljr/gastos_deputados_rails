@@ -20,6 +20,6 @@ class Deputy < ApplicationRecord
   end
 
   def monthly_expenses(month, year)
-    self.expenses.where("strftime('%m', date) = ? AND strftime('%Y', date) = ?", month, year).sum(:value)
+    self.expenses.where("extract(MONTH FROM date) = ? AND extract(YEAR FROM date) = ?", month, year).sum(:value)
   end
 end

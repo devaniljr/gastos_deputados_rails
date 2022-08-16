@@ -10,6 +10,6 @@ class Expense < ApplicationRecord
   validates :document_url, presence: true
 
   def self.all_monthly_expenses(month, year)
-    self.where("strftime('%m', date) = ? AND strftime('%Y', date) = ?", month, year).sum(:value)
+    self.where("extract(MONTH FROM date) = ? AND extract(YEAR FROM date) = ?", month, year).sum(:value)
   end
 end

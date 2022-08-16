@@ -20,6 +20,8 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'pg'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -41,7 +43,6 @@ group :development, :test do
   gem 'stackprof'
 
   gem 'sqlite3', '~> 1.4'
-
 end
 
 group :development do
@@ -62,9 +63,6 @@ group :test do
   gem 'simplecov', require: false
 end
 
-group :production do
-  gem 'pg'
-end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

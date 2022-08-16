@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2022_08_14_142024) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "deputies", force: :cascade do |t|
     t.integer "number_deputy"
     t.string "name"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 2022_08_14_142024) do
     t.string "provider_name"
     t.decimal "value"
     t.string "document_url"
-    t.integer "deputy_id", null: false
+    t.bigint "deputy_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["deputy_id"], name: "index_expenses_on_deputy_id"
