@@ -21,6 +21,7 @@ class ExpensesController < ApplicationController
   end
 
   def import
+    errors = []
     begin
       file = params["/importar"]["csv"]
       file = file.tempfile.path
@@ -29,15 +30,18 @@ class ExpensesController < ApplicationController
         Thread.new do
           PopulateDatabaseJob.perform_later(file)
         end
-        redirect_to root_path
-        flash[:notice] = "Os dados estão sendo processados..."
-      else
-        redirect_to importar_path
-        flash[:alert] = "Este arquivo não é valido!"
       end
-    rescue Errno::ENOENT
+
+    rescue Exception => err
+      errors << err.message
+    end
+
+    if errors.blank?
+      redirect_to root_path
+      flash[:notice] = "Os dados estão sendo processados..."
+    else
       redirect_to importar_path
-      flash[:alert] = "Erro ao processar o arquivo, tente novamente com o mesmo arquivo!"
+      flash[:alert] = errors.join(", ")
     end
   end
 

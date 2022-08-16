@@ -7,7 +7,6 @@ module CsvManager
     end
 
     def call
-      begin
         required_headers = ["txNomeParlamentar", "ideCadastro", "nuLegislatura", "sgUF", "sgPartido", "numSubCota", "txtDescricao",
           "txtFornecedor", "txtCNPJCPF", "datEmissao", "vlrLiquido", "urlDocumento"]
         uf = 'RO'
@@ -24,8 +23,8 @@ module CsvManager
 
         # use in rails: data.extract!(*required_headers)
         data.each { |hash| hash.keep_if { |k, _| required_headers.include? k } }
-      rescue Errno::ENOENT
-        p "Erro ao processar o arquivo, tente novamente com o mesmo arquivo!"
+      rescue Exception => err
+        errors << err.message
       end
     end
   end
