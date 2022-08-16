@@ -23,9 +23,6 @@ module CsvManager
 
         # use in rails: data.extract!(*required_headers)
         data.each { |hash| hash.keep_if { |k, _| required_headers.include? k } }
-      rescue Exception => err
-        errors << err.message
-      end
     end
   end
 end
