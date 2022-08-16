@@ -2,6 +2,7 @@ class ExpensesController < ApplicationController
   def index
     @deputies = Deputy.all.sort_by(&:sum_of_expenses).reverse
     @expenses = Expense.all
+    @year = @expenses.first["date"].year.to_s if @expenses.present?
   end
 
   def show
@@ -10,6 +11,7 @@ class ExpensesController < ApplicationController
 
     @deputy = Deputy.find(params[:id])
     @expenses = @deputy.expenses.order("value desc").page(params[:page]).per(25)
+    @year = @expenses.first["date"].year.to_s
 
     uri = URI("https://dadosabertos.camara.leg.br/api/v2/deputados/#{@deputy.number_deputy}")
     res = Net::HTTP.get_response(uri)
@@ -38,7 +40,7 @@ class ExpensesController < ApplicationController
 
     if errors.blank?
       redirect_to root_path
-      flash[:notice] = "Os dados estão sendo processados..."
+      flash[:notice] = "Os dados estão sendo processados... Aguarde alguns minutos e atualize a página."
     else
       redirect_to importar_path
       flash[:alert] = errors.join(", ")

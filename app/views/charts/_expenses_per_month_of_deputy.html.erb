@@ -1,0 +1,42 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', { 'packages': ['bar'] });
+  google.charts.setOnLoadCallback(drawStuff);
+
+  function drawStuff() {
+    var data = new google.visualization.arrayToDataTable([
+      ['Meses', 'Despesas'],
+      ["Janeiro/21", <%= deputy.monthly_expenses('01', "#{year}") %>],
+      ["Fevereiro", <%= deputy.monthly_expenses('02', "#{year}") %>],
+      ["Março", <%= deputy.monthly_expenses('03', "#{year}") %>],
+      ["Abril", <%= deputy.monthly_expenses('04', "#{year}") %>],
+      ["Maio", <%= deputy.monthly_expenses('05', "#{year}") %>],
+      ["Junho", <%= deputy.monthly_expenses('06', "#{year}") %>],
+      ["Julho", <%= deputy.monthly_expenses('07', "#{year}") %>],
+      ["Agosto", <%= deputy.monthly_expenses('08', "#{year}") %>],
+      ["Setembro", <%= deputy.monthly_expenses('09', "#{year}") %>],
+      ["Outubro", <%= deputy.monthly_expenses('10', "#{year}") %>],
+      ["Novembro", <%= deputy.monthly_expenses('11', "#{year}") %>],
+      ["Dezembro", <%= deputy.monthly_expenses('12', "#{year}") %>],
+      ["Janeiro/22", <%= deputy.monthly_expenses('01', "#{year.to_i + 1}") %>]
+        ]);
+
+    var options = {
+      width: 1000,
+      legend: { position: 'none' },
+      chart: {},
+      axes: {
+        x: {
+          0: { side: 'bottom' } // Top x-axis.
+        }
+      },
+      bar: { groupWidth: "90%" }
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+    // Convert the Classic options to Material options.
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  };
+</script>
+
+<div id="top_x_div" style="width: 800px; height: 600px;"></div>

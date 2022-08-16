@@ -34,6 +34,14 @@ group :development, :test do
   gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-maintenance'
   gem 'factory_bot_rails'
   gem "bullet"
+  gem 'rack-mini-profiler'
+
+  # For memory profiling
+  gem 'memory_profiler'
+
+  # For call-stack profiling flamegraphs
+  gem 'stackprof'
+
 end
 
 group :development do
