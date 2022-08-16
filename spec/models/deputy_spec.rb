@@ -81,7 +81,38 @@ RSpec.describe Deputy, type: :model do
     it 'photo_url is generated before save to dabatase if api do not respond' do
       deputy = FactoryBot.create(:deputy_without_api_data, photo_url: nil)
 
-      expect(deputy.photo_url).to eq('https://www.camara.leg.br/internet/deputado/bandep/204359.jpg')
+      expect(deputy.photo_url).to eq("https://www.camara.leg.br/internet/deputado/bandep/#{deputy.number_deputy}.jpg")
     end
   end
+
+  context '#sum_of_expenses' do
+    it 'returns the sum of expenses of given deputy' do
+      FactoryBot.create(:expense)
+
+      expect(Deputy.first.sum_of_expenses).to eq(1000.to_d)
+    end
+  end
+
+  context '#biggest_expense' do
+    it 'returns the biggest expense of given deputy' do
+      deputy = FactoryBot.create(:deputy)
+
+      smaller_expense = FactoryBot.create(:expense, value: 100.to_d, deputy: deputy)
+      biggest_expense = FactoryBot.create(:expense, value: 500.to_d, deputy: deputy)
+
+      expect(deputy.biggest_expense).to eq(biggest_expense)
+    end
+  end
+
+  context '#monthly_expenses' do
+    it 'return the expenses of the given month and year' do
+      deputy = FactoryBot.create(:deputy)
+
+      expense_february_1 = FactoryBot.create(:expense, value: 500.to_d, deputy: deputy, date: Date.new(2021, 02, 15))
+      expense_february_2 = FactoryBot.create(:expense, value: 1000.to_d, deputy: deputy, date: Date.new(2021, 02, 15))
+
+      expect(deputy.monthly_expenses('02', '2021')).to eq(1500.to_d)
+    end
+  end
+
 end
