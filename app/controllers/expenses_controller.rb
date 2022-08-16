@@ -14,16 +14,21 @@ class ExpensesController < ApplicationController
   end
 
   def import
-    file = params["/importar"]["csv"]
-    file = file.tempfile.path
+    begin
+      file = params["/importar"]["csv"]
+      file = file.tempfile.path
 
-    if CsvManager::CheckIntegrityService.call(file)
-      PopulateDatabaseJob.perform_later(file)
-      redirect_to root_path
-      flash[:notice] = "Os dados estão sendo processados..."
-    else
-      redirect_to root_path
-      flash[:alert] = "Erro ao processar o arquivo"
+      if CsvManager::CheckIntegrityService.call(file)
+        PopulateDatabaseJob.perform_later(file)
+        redirect_to root_path
+        flash[:notice] = "Os dados estão sendo processados..."
+      else
+        redirect_to importar_path
+        flash[:alert] = "Este arquivo não é valido!"
+      end
+    rescue Errno::ENOENT
+      redirect_to importar_path
+      flash[:alert] = "Erro ao processar o arquivo, tente novamente com o mesmo arquivo!"
     end
   end
 

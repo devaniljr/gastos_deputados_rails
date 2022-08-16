@@ -58,7 +58,7 @@
 
       function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
-          ['Meses', 'Despesas (em mil)'],
+          ['Meses', 'Despesas'],
           ["Janeiro/21", <%= @expenses.all_monthly_expenses('01', '2021') %>],
           ["Fevereiro", <%= @expenses.all_monthly_expenses('02', '2021') %>],
           ["Março", <%= @expenses.all_monthly_expenses('03', '2021') %>],
