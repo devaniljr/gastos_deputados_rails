@@ -25,8 +25,7 @@ module CsvManager
         # use in rails: data.extract!(*required_headers)
         data.each { |hash| hash.keep_if { |k, _| required_headers.include? k } }
       rescue Errno::ENOENT
-        redirect_to importar_path
-        flash[:alert] = "Erro ao processar o arquivo, tente novamente com o mesmo arquivo!"
+        p "Erro ao processar o arquivo, tente novamente com o mesmo arquivo!"
       end
     end
   end

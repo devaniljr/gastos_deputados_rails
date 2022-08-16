@@ -5,8 +5,15 @@ class ExpensesController < ApplicationController
   end
 
   def show
+    require 'uri'
+    require 'net/http'
+
     @deputy = Deputy.find(params[:id])
     @expenses = @deputy.expenses.order("value desc").page(params[:page]).per(25)
+
+    uri = URI("https://dadosabertos.camara.leg.br/api/v2/deputados/#{@deputy.number_deputy}")
+    res = Net::HTTP.get_response(uri)
+    @deputy_api = JSON.parse(res.body)["dados"]
   end
 
   def create
@@ -19,7 +26,9 @@ class ExpensesController < ApplicationController
       file = file.tempfile.path
 
       if CsvManager::CheckIntegrityService.call(file)
-        PopulateDatabaseJob.perform_later(file)
+        Thread.new do
+          PopulateDatabaseJob.perform_later(file)
+        end
         redirect_to root_path
         flash[:notice] = "Os dados estão sendo processados..."
       else

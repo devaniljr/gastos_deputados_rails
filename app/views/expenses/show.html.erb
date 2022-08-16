@@ -1,6 +1,9 @@
 <div class="container pt-4">
   <h1>Despesas de <%= @deputy.name %></h1>
   <p>A maior despesa foi de <%= number_to_currency(@deputy.biggest_expense.value, unit: "R$ ", separator: ",", delimiter: ".")  %></p>
+  <p>Nome civil: <%= @deputy_api['nomeCivil'] %></p>
+  <p>E-mail: <%= @deputy_api["ultimoStatus"]["gabinete"]["telefone"] %></p>
+  <p>Telefone: <%= @deputy_api["ultimoStatus"]["gabinete"]["email"] %></p>
 
   <table class="table">
     <thead>
