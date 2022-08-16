@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-maintenance'
   gem 'factory_bot_rails'
+  gem "bullet"
 end
 
 group :development do
