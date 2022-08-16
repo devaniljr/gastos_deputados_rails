@@ -1,0 +1,27 @@
+<% if @deputies.empty? %>
+  <div class="container text-center">
+    <h1>Enviar novos dados</h1>
+    <p>Você pode fazer o download de novos dados por meio da página <%= link_to 'Dados Abertos', 'https://dadosabertos.camara.leg.br/swagger/api.html#staticfile' %> da Câmara dos Deputados e enviar no formulário abaixo no formato .CSV:</p>
+
+    <%= form_for(action="/importar", class:"row align-items-center w-50 m-auto") do |f| %>
+      <div class="form-outline mb-4">
+        <%= f.label 'Upload do arquivo: ', class: "form-label" %>
+        <%= f.file_field :csv, accept: ".csv", class: "form-control-file d-inline w-auto" %>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit "Enviar arquivo", class: "btn btn-primary" %>
+      </div>
+  </div>
+    <% end %>
+
+<% else %>
+  <div class="container text-center">
+    <h1>Apagar dados atuais</h1>
+    <p>Para poder enviar novos dados, você precisa apagar os dados atuais. Tem certeza que deseja fazer isso?</p>
+
+    <div>
+      <%= button_to "Excluir dados", importar_path, method: :delete, class: "btn btn-danger" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,60 @@
+<div class="container pt-4">
+
+  <div class="card">
+    <div class="row no-gutters">
+      <div class="col-sm-2">
+        <%= image_tag @deputy.photo_url, size: "190x220" %>
+      </div>
+      <div class="col-sm-7">
+        <div class="card-body">
+          <h5 class="card-title"><%= @deputy.name %></h5>
+            <p class="card-text">Nome civil: <%= @deputy_api['nomeCivil'] %></p>
+            <p class="card-text">E-mail: <%= @deputy_api["ultimoStatus"]["gabinete"]["telefone"] %></p>
+            <p class="card-text">Telefone: <%= @deputy_api["ultimoStatus"]["gabinete"]["email"] %></p>
+            <p class="card-text">A maior despesa foi de <%= number_to_currency(@deputy.biggest_expense.value, unit: "R$ ", separator: ",", delimiter: ".")  %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <h2>💰 Despesas</h2>
+  <p></p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Fornecedor</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Nota Fiscal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |exp| %>
+        <% if exp == @deputy.biggest_expense %>
+          <tr class="table-danger">
+            <th scope="row"><%= l exp.date, format: :date_ %></th>
+            <td><%= exp.provider_name %></td>
+            <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
+            <td class="text-center"><%= link_to "📥", exp.document_url %></td>
+          </tr>
+        <% else %>
+          <tr>
+            <th scope="row"><%= l exp.date, format: :date_ %></th>
+            <td><%= exp.provider_name %></td>
+            <td><%= number_to_currency(exp.value, unit: "R$ ", separator: ",", delimiter: ".")  %></td>
+            <td class="text-center"><%= link_to "📥", exp.document_url %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @expenses %>
+
+  <hr>
+  <h2>📊 Gráficos</h2>
+  <h3 class="pb-4">Despesas com CEAP por mês de <%= @deputy.name %>:</h3>
+
+  <%= render 'charts/expenses_per_month_of_deputy', deputy: @deputy, year: @year %>
+</div>

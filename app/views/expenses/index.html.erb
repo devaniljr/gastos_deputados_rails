@@ -1,0 +1,36 @@
+<div class="container pt-4">
+  <% if @deputies.empty? %>
+    <div class="container text-center">
+      <%= image_tag 'sem_dados.png', class: "rounded mx-auto d-block" %>
+      <h3>Ainda não há dados para serem mostrados...</h3>
+      <p>Se você já enviou um novo arquivo, aguarde alguns minutos e atualize esta página. Caso você ainda não tenha enviado, acesse a página <%= link_to 'Enviar dados', importar_path %>.</p>
+    </div>
+  <% else %>
+    <h2>Veja quem são os deputados federais que mais gastaram com a Cota para Exercício da Atividade Parlamentar em <%= @year %> | Rondônia</h2>
+    <% @deputies.each do |dep| %>
+      <%= link_to dep do %>
+        <main class="leaderboard__profiles">
+          <article class="leaderboard__profile">
+            <%= image_tag dep.photo_url, class: "leaderboard__picture" %>
+            <span class="leaderboard__name">
+              <%= dep.name %> (<%= dep.party %>)
+            </span>
+            <span class="leaderboard__value">
+              <%= number_to_currency(dep.sum_of_expenses, unit: "R$ ", separator: ",", delimiter: ".") %>
+            </span>
+          </article>
+        </main>
+      <% end %>
+    <% end %>
+
+    <hr>
+    <h2>📊 Gráficos</h2>
+    <h3>Qual deputado mais gastou?</h3>
+    <%= render 'charts/who_spent_most_deputies', deputies: @deputies %>
+
+    <hr>
+    <h3 class="pb-4">Despesas com CEAP por mês no estado:</h3>
+    <%= render 'charts/expenses_per_month', expenses: @expenses, year: @year %>
+
+  <% end %>
+</div>
